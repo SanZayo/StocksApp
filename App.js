@@ -1,44 +1,58 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
+import React, { Suspense } from 'react';
 import type { Node } from 'react';
-import { useColorScheme } from 'react-native';
+import './i18n';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { ThemeProvider, createTheme, Text, Icon } from '@rneui/themed';
+
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './src/screens/HomeScreen';
-import DetailsScreen from './src/screens/DetailsScreen';
-import { Provider as PaperProvider } from 'react-native-paper';
 import store from './src/redux/store';
 import { Provider as StoreProvider } from 'react-redux';
 
-const Stack = createNativeStackNavigator();
+import ChangeLanguage from './src/screens/ChangeLanguage';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { KeyboardAvoidingView } from 'react-native';
+
+const theme = createTheme({
+  lightColors: {
+    primary: '#aabbcc',
+  },
+  darkColors: {
+    primary: '#000',
+  },
+  mode: 'light',
+});
+
+//const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   return (
-    <StoreProvider store={store}>
-      <PaperProvider>
+    <ThemeProvider>
+      <StoreProvider store={store}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Details" component={DetailsScreen} />
-          </Stack.Navigator>
+          <SafeAreaProvider>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              style={{ flex: 1 }}
+              keyboardVerticalOffset={Platform.OS === "ios" ? -64 : 0}
+            >
+              <Drawer.Navigator screenOptions={{
+                overlayColor: 'transparent'
+              }} >
+                <Drawer.Screen name="Main" component={HomeScreen} options={{ drawerLabel: 'Home', title: 'Stock', drawerIcon: () => <Icon name="home" size={20} color='black' /> }} />
+                <Drawer.Screen name="Language" component={ChangeLanguage} options={{ drawerIcon: () => <Icon name="language" size={20} color='black' /> }} />
+              </Drawer.Navigator>
+              {/* <Suspense fallback={<Text>loading...</Text>}>
+             <Localization />
+           </Suspense> */}
+            </KeyboardAvoidingView>
+          </SafeAreaProvider>
         </NavigationContainer>
-      </PaperProvider>
-    </StoreProvider>
+      </StoreProvider>
+    </ThemeProvider >
   );
 };
 

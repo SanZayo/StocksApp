@@ -1,10 +1,12 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { DataTable } from 'react-native-paper';
 import { stockHeaders } from '../constants/stockConstat';
+import { useNavigation } from '@react-navigation/native';
 
-const StockView = ({ navigation }) => {
+const StockView = () => {
+  const navigation = useNavigation();
   const stocks = useSelector(state => state.stock.stocks);
   //console.log(stocks);
   const viewDetails = stock => {
@@ -12,8 +14,8 @@ const StockView = ({ navigation }) => {
     navigation.navigate('Details', { data: stock });
   };
   return (
-    <View>
-      <DataTable>
+    <ScrollView showsVerticalScrollIndicator>
+      <DataTable className="relative top-0">
         <DataTable.Header className="bg-slate-400">
           {stockHeaders.map(title => (
             <DataTable.Title key={title}>
@@ -24,8 +26,10 @@ const StockView = ({ navigation }) => {
 
         {stocks &&
           stocks.map(stock => (
-            <TouchableOpacity onPress={() => viewDetails(stock)}>
-              <DataTable.Row className="font-bold" key={stock.sid}>
+            <TouchableOpacity
+              onPress={() => viewDetails(stock)}
+              key={stock.sid}>
+              <DataTable.Row className="font-bold">
                 <DataTable.Cell>{stock.sid}</DataTable.Cell>
                 <DataTable.Cell>{stock.type}</DataTable.Cell>
                 <DataTable.Cell>{stock.exchange}</DataTable.Cell>
@@ -36,7 +40,7 @@ const StockView = ({ navigation }) => {
             </TouchableOpacity>
           ))}
       </DataTable>
-    </View>
+    </ScrollView>
   );
 };
 
