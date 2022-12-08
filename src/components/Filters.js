@@ -8,7 +8,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import { List, Button } from 'react-native-paper';
+import { Button, Icon, ListItem } from '@rneui/themed';
 
 const FILTERS_ICON_WIDTH = 44;
 const FILTERS_BUTTON_WIDTH = 100;
@@ -40,20 +40,21 @@ const Filters = props => {
     const velocityFactor = Math.abs(event.nativeEvent.velocity.x * 30);
 
     if (offsetX > 0 && offsetX < maxOffset / 2 - velocityFactor) {
-      scrollViewRef.scrollTo({ x: 0 });
+      scrollViewRef?.scrollTo({ x: 0 });
     } else if (
       maxOffset / 2 + velocityFactor <= offsetX &&
       offsetX < maxOffset
     ) {
-      scrollViewRef.scrollTo({
-        x: FILTERS_BUTTON_WIDTH,
-      });
+      scrollViewRef?.scrollTo &&
+        scrollViewRef?.scrollTo({
+          x: FILTERS_BUTTON_WIDTH,
+        });
     }
   };
 
   return (
-    <View style={styles.container} className="mb-1">
-      <View style={styles.stickyItem}>
+    <View style={styles.container}>
+      <View>
         <Animated.View
           style={[
             styles.stickyItemMask,
@@ -65,8 +66,9 @@ const Filters = props => {
           {/* <StickyItemButton activeFiltersCount={activeFiltersCount} /> */}
           <Button
             className="m-2"
-            mode="elevated"
+            type="solid"
             onPress={() => setShowFilter(!showFilter)}>
+            <Icon name="filter-alt" color="white" />
             Filters
           </Button>
         </Animated.View>
@@ -84,27 +86,34 @@ const Filters = props => {
           onScrollEndDrag={onScrollEndSnapToEdge}
           scrollEventThrottle={16}
           ref={scrollViewRef}>
-          {filters.map(filter =>
-            filter.type === 'MULTI_CHOICE' ? (
-              <List.Accordion
-                className="border rounded-2xl text-zinc-50"
-                title={filter.label}>
-                {filter.options.map(opt => (
-                  <List.Item
-                    key={opt}
-                    title={opt}
-                    onPress={() => selectFilter(opt)}
-                  />
-                ))}
-              </List.Accordion>
-            ) : (
+          {filters.map((filter, index) =>
+            filter.type === 'MULTI_CHOICE' ? null : (
+              // <ListItem
+              //   key={index}
+              //   className="border rounded-2xl text-zinc-50"
+              //   title={filter.label}>
+              //   <ListItem.Content>
+              //     {filter.options.map((opt,i) => (
+              //       <ListItem.Title key={opt} onPress={e => selectFilter(opt)}>{opt}</ListItem.Title>
+              //     ))}
+              //   </ListItem.Content>
+              // </ListItem>
               <Button
-                className="m-2"
+                containerStyle={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginRight: 1,
+                }}
+                buttonStyle={{
+                  borderRadius: 3,
+                }}
                 key={filter.name}
-                mode={activeFiltersMap[filter.name] ? 'contained' : 'outlined'}
-                onPress={() => selectFilter(filter.name)}>
-                {filter.label}
-              </Button>
+                title={filter.label}
+                type={activeFiltersMap[filter.name] ? 'solid' : 'outline'}
+                onPress={() => selectFilter(filter.name)}
+              />
             ),
           )}
         </ScrollView>
@@ -130,8 +139,6 @@ const styles = StyleSheet.create({
   stickyItem: {
     position: 'absolute',
     zIndex: 1,
-    left: 10,
-    paddingRight: 8,
   },
   stickyItemMask: {
     minWidth: FILTERS_ICON_WIDTH,
@@ -140,13 +147,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   scrollView: {
-    marginLeft: 10,
+    marginLeft: 0,
   },
   scrollViewContent: {
-    paddingLeft: 100,
-    paddingRight: 10,
-    paddingBottom: 13,
-    marginBottom: 5,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingBottom: 1,
+    marginBottom: 2,
   },
   dropDownIcon: {
     marginRight: 6,

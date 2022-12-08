@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Button, Card, Text, Title } from 'react-native-paper';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button, Card, Icon } from '@rneui/themed';
 
 const DetailsScreen = ({ route, navigation }) => {
   const { data } = route.params;
@@ -8,51 +8,68 @@ const DetailsScreen = ({ route, navigation }) => {
   return (
     <Card>
       <Card.Title>{data.sid}</Card.Title>
-      <Card.Content>
-        <Title className="text-blue-700 text-center mb-2">{data.sid}</Title>
-        <View className="border border-neutral-300 p-0 m-0" />
-        <View className="flex-row text-center mt-2">
-          <Text className="text-orange-500 mr-2" variant="titleMedium">
-            Type:
-          </Text>
-          <Text variant="titleSmall">{data.type}</Text>
-        </View>
-        <View className="flex-row text-center">
-          <Text className="text-orange-500 mr-2" variant="titleMedium">
-            Exchange:
-          </Text>
-          <Text variant="titleSmall">{data.exchange}</Text>
-        </View>
-        <View className="flex-row text-center">
-          <Text className="text-orange-500 mr-2" variant="titleMedium">
-            Price:{' '}
-          </Text>
-          <Text variant="titleSmall">{data.price}</Text>
-        </View>
-        <View className="flex-row text-center">
-          <Text className="text-orange-500 mr-2" variant="titleMedium">
-            Change:{' '}
-          </Text>
-          <Text variant="titleSmall">{data.change}</Text>
-        </View>
-        <View className="flex-row text-center">
-          <Text className="text-orange-500 mr-2" variant="titleMedium">
-            Day change:{' '}
-          </Text>
-          <Text variant="titleSmall">{data.dyChange}</Text>
-        </View>
-        <View className="border border-neutral-300 p-0 m-3" />
-      </Card.Content>
-      <Card.Actions>
+      <Card.Divider />
+
+      {/* <Title className="text-blue-700 text-center mb-2">{data.sid}</Title> */}
+      {/* <View className="border border-neutral-300 p-0 m-0"></View> */}
+      <View className="flex-row text-center mt-2 mb-2">
+        <Text className="text-orange-500 mr-2" variant="titleMedium">
+          Type:
+        </Text>
+        <Text variant="titleSmall">{data.type}</Text>
+      </View>
+      <View className="flex-row text-center mb-2">
+        <Text className="text-orange-500 mr-2" variant="titleMedium">
+          Exchange:
+        </Text>
+        <Text variant="titleSmall">{data.exchange}</Text>
+      </View>
+      <View className="flex-row text-center mb-2">
+        <Text className="text-orange-500 mr-2" variant="titleMedium">
+          Price:{' '}
+        </Text>
+        <Text variant="titleSmall">{data.price}</Text>
+      </View>
+      <View className="flex-row text-center mb-2">
+        <Text className="text-orange-500 mr-2" variant="titleMedium">
+          Change:{' '}
+        </Text>
+        <Text variant="titleSmall">{data.change}</Text>
+      </View>
+      <View className="flex-row text-center mb-2">
+        <Text className="text-orange-500 mr-2" variant="titleMedium">
+          Day change:{' '}
+        </Text>
+        <Text variant="titleSmall">{data.dyChange}</Text>
+      </View>
+      {/* <View className="border border-neutral-300 p-0 m-3"></View> */}
+
+      <Card.Divider />
+      <View className="flex-row justify-between mt-2">
         <Button
-          mode="contained"
+          type="solid"
           className="text-center"
-          onPress={() => navigation.goBack()}>
-          Show List
+          color="#8A2BE2"
+          onPress={() => navigation.goBack()}
+          title="Show List">
+          <Icon name="list" color="white" />
+          Show Stocks
         </Button>
-      </Card.Actions>
+        <Button
+          type="solid"
+          className="text-center rounded-full"
+          onPress={() =>
+            navigation.navigate('AddEdit', { editMode: 'edit', data: data })
+          }
+          title="Edit">
+          <Icon name="edit" color="white" />
+          Edit
+        </Button>
+      </View>
     </Card>
   );
 };
 
 export default DetailsScreen;
+
+const styles = StyleSheet.create({});

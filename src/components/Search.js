@@ -1,4 +1,4 @@
-import { View, TextInput } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import React, { useEffect } from 'react';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import Filters from './Filters';
@@ -13,7 +13,18 @@ const Search = ({ searchData, filterData }) => {
 
   const selectFilter = name => {
     //alert(JSON.stringify(activeFiltersMap));
-    setActiveFiltersMap(prevActive => ({ ...prevActive, [name]: name }));
+    if (activeFiltersMap[name]) {
+      setActiveFiltersMap(
+        prevActive => {
+          return { ...prevActive, [name]: undefined };
+        },
+        () => {
+          filterData(activeFiltersMap, stocks);
+        },
+      );
+    } else {
+      setActiveFiltersMap(prevActive => ({ ...prevActive, [name]: name }));
+    }
   };
   const onChangeSearch = text => {
     setSearchQuery(text);
@@ -29,17 +40,22 @@ const Search = ({ searchData, filterData }) => {
   // }, [stocks]);
   return (
     <View>
-      <View className="flex-row items-center justify-between">
-        <View className="flex-row flex-1 space-x-2 bg-gray-200 p-3">
-          <MagnifyingGlassIcon className="top-4" color="gray" size={20} />
-          <TextInput
-            className="p-0"
-            placeholder="Search by Name"
-            keyboardType="default"
-            value={searchQuery}
-            onChangeText={text => onChangeSearch(text)}
-          />
-        </View>
+      <View className="flex-row items-center p-1 m-1 border rounded-3xl bg-white">
+        {/* <View className="flex-row flex-1 space-x-2 bg-gray-200 p-3 rounded-md"> */}
+        <MagnifyingGlassIcon
+          className="absolute top-1 left-1 p-2"
+          color="gray"
+          size={20}
+        />
+        <TextInput
+          className="p-1 rounded-3xl"
+          placeholder="Search by Name"
+          keyboardType="default"
+          value={searchQuery}
+          onChangeText={text => onChangeSearch(text)}
+        />
+
+        {/* </View> */}
         {/* <Searchbar
           placeholder="Search"
           onChangeText={onChangeSearch}

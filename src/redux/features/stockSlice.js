@@ -21,9 +21,31 @@ export const stockSlice = createSlice({
         });
       }
     },
+    updateStockAction: (state, action) => {
+      //console.log("actions is updateStock", action);
+      const { payload } = action;
+      console.log('actions is updateStock', payload);
+      if (payload) {
+        const stock = state.stocks.find(st => st.sid === payload.sid);
+        Object.keys(payload).forEach(key => {
+          if (stock.hasOwnProperty(key)) {
+            stock[key] = payload[key];
+          }
+        });
+        //console.log("*************** ", state.stocks);
+      }
+    },
+    addNewStock: (state, action) => {
+      //console.log("actions is addNewStock", action);
+      const { payload } = action;
+      if (payload) {
+        state.stocks.push(payload);
+      }
+    },
   },
 });
 
-export const { setStocks, filterStocks } = stockSlice.actions;
+export const { setStocks, filterStocks, updateStockAction, addNewStock } =
+  stockSlice.actions;
 
 export default stockSlice.reducer;
