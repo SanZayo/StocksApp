@@ -22,17 +22,16 @@ export const stockSlice = createSlice({
       }
     },
     updateStockAction: (state, action) => {
-      //console.log("actions is updateStock", action);
+      console.log("🚀 ~ file: stockSlice.js:25 ~ action", action)
       const { payload } = action;
-      console.log('actions is updateStock', payload);
+      console.log("🚀🏴‍☠️ ~ file: stockSlice.js:27 ~ payload", payload)
       if (payload) {
-        const stock = state.stocks.find(st => st.sid === payload.sid);
+        const stock = state.stocks.find(st => st.s === payload.s);
         Object.keys(payload).forEach(key => {
           if (stock.hasOwnProperty(key)) {
             stock[key] = payload[key];
           }
         });
-        //console.log("*************** ", state.stocks);
       }
     },
     addNewStock: (state, action) => {

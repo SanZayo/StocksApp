@@ -6,9 +6,23 @@ import DetailsScreen from './DetailsScreen';
 import ChangeLanguage from './ChangeLanguage';
 import Home from '../components/Home';
 import Edit from '../components/Edit';
+import PushNotification from 'react-native-push-notification';
+import { useEffect } from 'react';
 
 const HomeScreen = () => {
   const Stack = createNativeStackNavigator();
+
+  const createChannels = () => {
+    PushNotification.createChannel({
+      channelId: 'test-channel',
+      channelName: 'Test channel'
+    });
+  };
+
+  useEffect(() => {
+    createChannels();
+  }, []);
+
   return (
     <Stack.Navigator initialRouteName="Welcome">
       <Stack.Screen

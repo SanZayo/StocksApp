@@ -1,9 +1,8 @@
 export const stockHeaders = [
-  'Name',
-  'Type',
-  'Exchange',
+  'Symbol',
   'Price',
-  'Change',
+  'Volume',
+  'Date/Time',
   'Day Change',
 ];
 export const FILTERS = [
@@ -34,3 +33,4 @@ export const FILTERS = [
     options: ['index', 'NSE'],
   },
 ];
+export const STOCK_LIST = ["AAPL", "MSFT", "TSLA", "BABA", "UBER", "DIS", "SBUX" ];

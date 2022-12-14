@@ -88,16 +88,6 @@ const Filters = props => {
           ref={scrollViewRef}>
           {filters.map((filter, index) =>
             filter.type === 'MULTI_CHOICE' ? null : (
-              // <ListItem
-              //   key={index}
-              //   className="border rounded-2xl text-zinc-50"
-              //   title={filter.label}>
-              //   <ListItem.Content>
-              //     {filter.options.map((opt,i) => (
-              //       <ListItem.Title key={opt} onPress={e => selectFilter(opt)}>{opt}</ListItem.Title>
-              //     ))}
-              //   </ListItem.Content>
-              // </ListItem>
               <Button
                 containerStyle={{
                   flex: 1,

@@ -5,6 +5,7 @@ import Filters from './Filters';
 import { FILTERS } from '../constants/stockConstat';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Button } from '@rneui/themed';
 
 const Search = ({ searchData, filterData }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,8 +40,8 @@ const Search = ({ searchData, filterData }) => {
   //   setActiveFiltersMap({});
   // }, [stocks]);
   return (
-    <View>
-      <View className="flex-row items-center p-1 m-1 border rounded-3xl bg-white">
+    <View className="flex-row">
+      <View className="flex-row items-center p-1 m-1 border rounded-3xl bg-white w-4/5 inline-block">
         {/* <View className="flex-row flex-1 space-x-2 bg-gray-200 p-3 rounded-md"> */}
         <MagnifyingGlassIcon
           className="absolute top-1 left-1 p-2"
@@ -65,12 +66,20 @@ const Search = ({ searchData, filterData }) => {
           Search
         </Button> */}
       </View>
-      <Filters
+        <View className="w-1/5 p-1 m-0 -ml-2">
+          <Button 
+          style={{marginHorizontal: 3}} 
+          title={'Filters'} 
+          type="outline"
+          onPress={console.log('open filter')}
+          ></Button>
+        </View>
+      {/* <Filters
         filters={FILTERS}
         activeFiltersCount={0}
         activeFiltersMap={activeFiltersMap}
         selectFilter={selectFilter}
-      />
+      /> */}
     </View>
   );
 };

@@ -28,13 +28,12 @@ const StockView = () => {
           stocks.map(stock => (
             <TouchableOpacity
               onPress={() => viewDetails(stock)}
-              key={stock.sid}>
+              key={stock.s}>
               <DataTable.Row className="font-bold">
-                <DataTable.Cell>{stock.sid}</DataTable.Cell>
-                <DataTable.Cell>{stock.type}</DataTable.Cell>
-                <DataTable.Cell>{stock.exchange}</DataTable.Cell>
-                <DataTable.Cell>{stock.price}</DataTable.Cell>
-                <DataTable.Cell>{stock.change}</DataTable.Cell>
+                <DataTable.Cell>{stock.s}</DataTable.Cell>
+                <DataTable.Cell>{stock.p}</DataTable.Cell>
+                <DataTable.Cell>{stock.v}</DataTable.Cell>
+                <DataTable.Cell>{(new Date(stock.t)).toDateString()}</DataTable.Cell>
                 <DataTable.Cell>{stock.dyChange}</DataTable.Cell>
               </DataTable.Row>
             </TouchableOpacity>
